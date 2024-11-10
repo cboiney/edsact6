@@ -117,7 +117,8 @@ almond_ts <- ts(almond$ET.in, # data
 # decompose almond ET time series
 almond_dec <- decompose(almond_ts)
 # plot decomposition
-plot(almond_dec)
+plot(almond_dec) + title("
+Almond")
 
 acf(na.omit(almond_ts), # remove missing data
     lag.max = 24) # look at 2 years (24 months)
@@ -199,7 +200,8 @@ pistachio_ts <- ts(pistachio$ET.in, # data
 # decompose almond ET time series
 pistachio_dec <- decompose(pistachio_ts)
 # plot decomposition
-plot(pistachio_dec)
+plot(pistachio_dec) + title("
+Pistachio")
 
 #Fallow fields
 
@@ -218,7 +220,8 @@ fallow_ts <- ts(fallow$ET.in, # data
 # decompose almond ET time series
 fallow_dec <- decompose(fallow_ts)
 # plot decomposition
-plot(fallow_dec)
+plot(fallow_dec) + title("
+Fallow/Idle")
 
 #Corn
 
@@ -237,7 +240,8 @@ corn_ts <- ts(corn$ET.in, # data
 # decompose almond ET time series
 corn_dec <- decompose(corn_ts)
 # plot decomposition
-plot(corn_dec)
+plot(corn_dec) + title("
+Corn")
 
 #Table grapes
 
@@ -256,7 +260,8 @@ grape_ts <- ts(grapes$ET.in, # data
 # decompose almond ET time series
 grape_dec <- decompose(grape_ts)
 # plot decomposition
-plot(grape_dec)
+plot(grape_dec) + title("
+Grape")
 
 cropsdf <- bind_rows(
   almond %>% mutate(crop = "Almond"),
@@ -267,9 +272,11 @@ cropsdf <- bind_rows(
 )
 
 cropsdf %>% ggplot(aes(ymd(date), ET.in)) + 
-  geom_line(aes(color = crop)) + geom_point(aes(color = crop))
+  geom_line(aes(color = crop)) + geom_point(aes(color = crop)) + 
+  ggtitle("Evapotranspiration of Different Crops Over Time") + 
+  labs(x = "Date", y = "Evapotranspiration (inches)", color = "Crop")
 
-#Question 3
+#QUESTION 3
 
 pacf_pistachio.plot <- pacf(na.omit(pistachio_ts))
 
@@ -324,7 +331,8 @@ ggplot() +
               aes(x=dateF,ymin=Lo.95,
                   ymax=Hi.95), fill=rgb(0.5,0.5,0.5,0.5))+ # uncertainty interval
   theme_classic()+
-  labs(x="year", y="Evapotranspiration (in)")
+  labs(x="year", y="Evapotranspiration (in)") + 
+  ggtitle("Past and Forecasted Evapotranspiration Levels in Pistachio Fields")
 
 
 # make a plot with data and predictions including a prediction interval
@@ -337,4 +345,5 @@ ggplot() +
               aes(x=dateF,ymin=Lo.95,
                   ymax=Hi.95), fill=rgb(0.5,0.5,0.5,0.5))+ # uncertainty interval
   theme_classic()+
-  labs(x="year", y="Evapotranspiration (in)")
+  labs(x="year", y="Evapotranspiration (in)") + 
+  ggtitle("Past and Forecasted Evapotranspiration Levels in Fallow/Idle Fields")
